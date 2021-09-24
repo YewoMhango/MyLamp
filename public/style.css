@@ -225,7 +225,7 @@ main section.content p {
   border: grey 1px solid;
   position: fixed;
   display: inline-block;
-  box-shadow: 0 0 10px rgba(128, 128, 128, 0.5);
+  box-shadow: 0 0 3px rgba(128, 128, 128, 0.5);
   z-index: 10;
 }
 
