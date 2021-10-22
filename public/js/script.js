@@ -31,20 +31,6 @@ const bookNames = [
     "2 Timothy", "Titus", "Philemon", "Hebrews", "James", "1 Peter",
     "2 Peter", "1 John", "2 John", "3 John", "Jude", "Revelation",
 ];
-// prettier-ignore
-const shortBookNames = [
-    "Gen", "Exo", "Lev", "Num", "Deu", "Jos",
-    "Jdg", "Rth", "1Sa", "2Sa", "1Ki", "2Ki",
-    "1Ch", "2Ch", "Ezr", "Neh", "Est", "Job",
-    "Psa", "Pro", "Ecc", "Son", "Isa", "Jer",
-    "Lam", "Eze", "Dan", "Hos", "Joe", "Amo",
-    "Oba", "Jon", "Mic", "Nah", "Hab", "Zep",
-    "Hag", "Zec", "Mal", "Mat", "Mar", "Luk",
-    "Joh", "Act", "Rom", "1Co", "2Co", "Gal",
-    "Eph", "Phi", "Col", "1Th", "2Th", "1Ti",
-    "2Ti", "Tit", "Phm", "Heb", "Jam", "1Pe",
-    "2Pe", "1Jn", "2Jn", "3Jn", "Jud", "Rev",
-];
 let verse_count_stats;
 let current_verse;
 let language;
@@ -85,7 +71,10 @@ let titlebar = new customTitlebar.Titlebar({
     navigateTo(current_verse.book, current_verse.chapter, current_verse.verse);
     let overlaySection = document.querySelector("section.detached-elements");
     for (let child of Array.from(overlaySection.children)) {
-        child.onclick = (event) => event.stopPropagation();
+        child.onclick = (event) => {
+            event.stopPropagation();
+            removeContextMenu();
+        };
     }
     let sidebarResizeHandle = document.querySelector(".search-resizer");
     let sidebar = document.querySelector(".search");
@@ -102,8 +91,7 @@ let titlebar = new customTitlebar.Titlebar({
             hideSidebar();
         }
         else {
-            sidebar.style.width =
-                Math.min(newWidth, window.innerWidth - 100) + "px";
+            sidebar.style.width = Math.min(newWidth, window.innerWidth - 100) + "px";
         }
     }
     function stopResize() {
@@ -156,24 +144,40 @@ let titlebar = new customTitlebar.Titlebar({
                 onclick: async () => {
                     let from = searchInput.selectionStart, to = searchInput.selectionEnd, words = await navigator.clipboard.readText();
                     searchInput.value =
-                        searchInput.value.slice(0, from || undefined) +
+                        searchInput.value.slice(0, from) +
                             words +
-                            searchInput.value.slice(to || undefined);
+                            searchInput.value.slice(to);
                     // Put the cursor after the word
-                    searchInput.selectionStart =
-                        from + words.length;
+                    searchInput.selectionStart = from + words.length;
                     searchInput.selectionEnd = from + words.length;
                 },
             });
             showContextMenu([copyButton, pasteButton], e);
         }
     };
+    let fromSelector = document.querySelector(".search .input #search-from");
+    let toSelector = document.querySelector(".search .input #search-to");
+    bookNames.forEach((name) => {
+        fromSelector.appendChild(create("option", {
+            selected: name == "Genesis",
+            value: name,
+            innerText: name,
+        }));
+        toSelector.appendChild(create("option", {
+            selected: name == "Revelation",
+            value: name,
+            innerText: name,
+        }));
+    });
+    selectBook(current_verse.book);
+    selectChapter(current_verse.chapter);
+    selectVerse(current_verse.verse);
 })();
 function showContextMenu(buttons, clickEvent) {
     Array.from(document.querySelectorAll(".contextMenu")).forEach((element) => element.remove());
     clickEvent.stopPropagation();
     clickEvent.preventDefault();
-    let contextMenu = create("div", { className: "contextMenu" }, ...buttons);
+    let contextMenu = create("div", { className: "contextMenu" }, buttons);
     document.body.appendChild(contextMenu);
     if (clickEvent.clientX + contextMenu.clientWidth >
         document.body.clientWidth) {
@@ -216,6 +220,9 @@ async function navigateTo(book, chapter, verse) {
             document.querySelector("nav .nav-central .book-select").innerText = book + " " + chapter;
             current_verse = { book, chapter, verse };
             localStorage.setItem("current_verse", JSON.stringify(current_verse));
+            selectBook(book);
+            selectChapter(chapter);
+            selectVerse(verse);
         }
         else if (result.type == "json") {
             finishedRequests++;
@@ -226,8 +233,16 @@ async function navigateTo(book, chapter, verse) {
             ipcRenderer.removeListener("response", handleResponse);
         }
     }
-    ipcRenderer.send("request", `${language}/${book}/Chapters/${chapter}.txt`);
-    ipcRenderer.send("request", `${language}/${book}/Chapters/${chapter}.json`);
+    //   ipcRenderer.send("request", `${language}/${book}/Chapters/${chapter}.txt`);
+    ipcRenderer.send("request", {
+        type: "chapterText",
+        details: { book, chapter, language },
+    });
+    //   ipcRenderer.send("request", `${language}/${book}/Chapters/${chapter}.json`);
+    ipcRenderer.send("request", {
+        type: "chapterJson",
+        details: { book, chapter, language },
+    });
 }
 function verseNumberClicked(e, verse) {
     let copyButton = create("button", {
@@ -267,46 +282,62 @@ function nextChapter() {
 function showVerseSelector() {
     document.querySelector("section.detached-elements").style.display = "flex";
     let verseSelection = document.querySelector("section.detached-elements .verse-selector");
-    verseSelection.style.display = "block";
-    for (let i = 0; i < bookNames.length; i++) {
-        verseSelection.appendChild(create("div", {
-            onclick: () => selectBook(bookNames[i]),
-        }, create("span", {
-            innerText: shortBookNames[i],
-        })));
-    }
+    verseSelection.style.display = "grid";
 }
-let verse_being_selected;
 function selectBook(book) {
-    verse_being_selected = { book, chapter: 1, verse: 1 };
-    let verseSelection = document.querySelector("section.detached-elements .verse-selector");
-    verseSelection.innerHTML = "";
-    let numberOfChapters = verse_count_stats[bookNames.indexOf(book)].length;
-    for (let chapter = 1; chapter <= numberOfChapters; chapter++) {
-        verseSelection.appendChild(create("div", {
-            onclick: () => selectChapter(chapter),
-        }, create("span", {
-            innerText: chapter,
-        })));
+    let bookSelector = document.querySelector("section.detached-elements .verse-selector .select-book");
+    let scrollTop = bookSelector.scrollTop;
+    bookSelector.innerHTML = "";
+    for (let bookName of bookNames) {
+        let option = create("div", {
+            className: book == bookName ? "selected" : "",
+            value: bookName,
+            onclick: () => selectBook(bookName),
+        }, [create("span", null, [bookName])]);
+        bookSelector.appendChild(option);
     }
+    console.log(scrollTop);
+    bookSelector.scrollTop = scrollTop;
+    selectChapter(1);
+    selectVerse(1);
 }
 function selectChapter(chapter) {
-    verse_being_selected.chapter = chapter;
-    let verseSelection = document.querySelector("section.detached-elements .verse-selector");
-    verseSelection.innerHTML = "";
-    let numberOfVerses = verse_count_stats[bookNames.indexOf(verse_being_selected.book)][Number(chapter) - 1];
-    for (let verse = 1; verse <= numberOfVerses; verse++) {
-        verseSelection.appendChild(create("div", {
-            onclick: () => selectVerse(verse),
-        }, create("span", {
-            innerText: verse,
-        })));
+    let chapterSelector = document.querySelector("section.detached-elements .verse-selector .select-chapter");
+    let scrollTop = chapterSelector.scrollTop;
+    chapterSelector.innerHTML = "";
+    let currentBook = document.querySelector("section.detached-elements .verse-selector .select-book").querySelector(".selected").innerText;
+    let numOfChapters = verse_count_stats[bookNames.indexOf(currentBook)].length;
+    for (let i = 1; i <= numOfChapters; i++) {
+        let option = create("div", {
+            className: i == chapter ? "selected" : "",
+            onclick: () => selectChapter(i),
+        }, [create("span", null, [`${i}`])]);
+        chapterSelector.appendChild(option);
     }
+    console.log(scrollTop);
+    chapterSelector.scrollTop = scrollTop;
+    selectVerse(1);
 }
 function selectVerse(verse) {
-    let { book, chapter } = verse_being_selected;
-    navigateTo(book, chapter, verse);
-    closeOverlay();
+    let verseSelector = document.querySelector("section.detached-elements .verse-selector .select-verse");
+    let scrollTop = verseSelector.scrollTop;
+    verseSelector.innerHTML = "";
+    let book = document.querySelector("section.detached-elements .verse-selector .select-book").querySelector(".selected").innerText;
+    let chapter = Number(document.querySelector("section.detached-elements .verse-selector .select-chapter").querySelector(".selected").innerText);
+    let numOfVerses = verse_count_stats[bookNames.indexOf(book)][chapter - 1];
+    for (let i = 1; i <= numOfVerses; i++) {
+        let option = create("div", {
+            className: i == verse ? "selected" : "",
+            onclick: () => {
+                selectVerse(i);
+                navigateTo(book, chapter, i);
+                closeOverlay();
+            },
+        }, [create("span", null, [`${i}`])]);
+        verseSelector.appendChild(option);
+    }
+    console.log(scrollTop);
+    verseSelector.scrollTop = scrollTop;
 }
 function closeOverlay() {
     let section = document.querySelector("section.detached-elements");
@@ -314,7 +345,6 @@ function closeOverlay() {
     for (let child of Array.from(section.children)) {
         child.style.display = "none";
     }
-    document.querySelector("section.detached-elements .verse-selector").innerHTML = "";
 }
 function showMenu() {
     document.querySelector("section.detached-elements").style.display = "flex";
@@ -355,7 +385,11 @@ function changeFontSize() {
 async function search() {
     let searchText = document.querySelector("#searchBox")
         .value;
-    let searchType = document.querySelector("#search-type").value;
+    let searchType = document.querySelector("#search-type")
+        .value;
+    let from = document.querySelector("#search-from")
+        .value;
+    let to = document.querySelector("#search-to").value;
     ipcRenderer.on("response", handleResponse);
     function handleResponse(event, _result) {
         if (_result.type != "search")
@@ -363,14 +397,28 @@ async function search() {
         let result = _result.data;
         let container = document.querySelector("main section.search .results");
         container.innerHTML = "";
-        container.append(create("p", { className: "stats" }, `${result.length} results found (500 max)`));
-        container.append(create("div", { className: "results-list" }, ...result.map((resultVerse) => create("div", {
-            className: "result",
-            onclick: () => navigateTo(resultVerse.book, resultVerse.chapter, resultVerse.verse),
-        }, create("strong", null, `${resultVerse.book} ${resultVerse.chapter}:${resultVerse.verse}`), create("br"), resultVerse.text))));
+        container.append(create("p", { className: "stats" }, [
+            `${result.length} results found (500 max)`,
+        ]));
+        container.append(create("div", { className: "results-list" }, [
+            ...result.map((resultVerse) => create("div", {
+                className: "result",
+                onclick: () => navigateTo(resultVerse.book, resultVerse.chapter, resultVerse.verse),
+            }, [
+                create("strong", null, [
+                    `${resultVerse.book} ${resultVerse.chapter}:${resultVerse.verse}`,
+                ]),
+                create("br"),
+                resultVerse.text,
+            ])),
+        ]));
         ipcRenderer.removeListener("response", handleResponse);
     }
-    ipcRenderer.send("request", `search/${searchType}/${language}/${searchText}`);
+    //  ipcRenderer.send("request", `search/${searchType}/${language}/${searchText}`);
+    ipcRenderer.send("request", {
+        type: "search",
+        details: { type: searchType, language, searchText, from, to },
+    });
 }
 function toggleDarkMode() {
     let darkModeState = document.body.getAttribute("darkMode");
@@ -391,22 +439,24 @@ function toggleDarkMode() {
  * ---
  * @param {String} type Type of `HTMLElement` to be created
  * @param {Object} props Optional properties of the `HTMLElement` to be created
- * @param  {...HTMLElement} children Optional HTML Elements to be assigned as children of this element
+ * @param {Array<Node | string>} children Optional HTML Elements to be assigned as children of this element
  *
  * ---
- * @returns {HTMLElement} An `HTMLElement` object
+ * @returns {HTMLElement} An `HTMLElement`
  */
-function create(type, props, ...children) {
+function create(type, props, children) {
     if (!type)
         throw new TypeError("Empty HTMLElement type: " + type);
     let dom = document.createElement(type);
     if (props)
         Object.assign(dom, props);
-    for (let child of children) {
-        if (typeof child != "string")
-            dom.appendChild(child);
-        else
-            dom.appendChild(document.createTextNode(child));
+    if (children) {
+        for (let child of children) {
+            if (typeof child != "string")
+                dom.appendChild(child);
+            else
+                dom.appendChild(document.createTextNode(child));
+        }
     }
     return dom;
 }

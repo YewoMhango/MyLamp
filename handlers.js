@@ -31,7 +31,7 @@ const bookNames = [
 
 const bookNamesLowerCase = bookNames.map((s) => s.toLowerCase());
 
-function handleChapterTextRequest([_, book, chapter]) {
+function handleChapterTextRequest({ book, chapter, language }) {
   chapter = Number(chapter);
   book = book.toLowerCase();
 
@@ -49,7 +49,7 @@ function handleChapterTextRequest([_, book, chapter]) {
   }
 }
 
-function handleChapterJsonRequest([_, book, chapter]) {
+function handleChapterJsonRequest({ book, chapter, language }) {
   chapter = Number(chapter);
   book = book.toLowerCase();
 
@@ -85,16 +85,16 @@ function renderChapterAsHTMLWithItalics(book, chapter) {
   return html;
 }
 
-function handleSearchRequest([_, type, language, searchString]) {
+function handleSearchRequest(query) {
   const supportedSearchTypes = {
     exact: exactMatchSearch,
     standard: standardSearch,
   };
 
-  if (Object.keys(supportedSearchTypes).includes(type.toLowerCase())) {
+  if (Object.keys(supportedSearchTypes).includes(query.type.toLowerCase())) {
     return {
       type: "search",
-      data: supportedSearchTypes[type.toLowerCase()](searchString, language),
+      data: supportedSearchTypes[query.type.toLowerCase()](query),
     };
   } else {
     return { type: "search", data: "Search method not supported" };
@@ -105,16 +105,29 @@ const max_search_results = 500;
 
 /**
  *
- * @param {String} searchString
- * @param {String} langauge
+ * @param {String} searchText
+ * @param {String} language
  */
-function standardSearch(searchString, langauge) {
+function standardSearch({ language, searchText, from, to }) {
   let searchResults = [];
-  let keywords = searchString.split(" ").map((s) => s.toLowerCase());
+  const keywords = searchText.split(" ").map((s) => s.toLowerCase());
+
+  if (
+    bookNamesLowerCase.indexOf(from.toLowerCase()) >
+    bookNamesLowerCase.indexOf(to.toLowerCase())
+  ) {
+    [from, to] = [to, from];
+  }
+
+  const fromIdx = Math.max(bookNamesLowerCase.indexOf(from.toLowerCase()), 0);
+  const toIdx = Math.min(
+    bookNamesLowerCase.indexOf(to.toLowerCase()) + 1,
+    all_verses.length
+  );
 
   for (
-    let i = 0;
-    i < all_verses.length && searchResults.length < max_search_results;
+    let i = fromIdx;
+    i < toIdx && searchResults.length < max_search_results;
     i++
   ) {
     let currentBook = all_verses[i];
@@ -150,13 +163,26 @@ function standardSearch(searchString, langauge) {
   return searchResults;
 }
 
-function exactMatchSearch(searchString) {
+function exactMatchSearch({ language, searchText, from, to }) {
   let searchResults = [];
-  searchString = searchString.toLowerCase();
+  searchText = searchText.toLowerCase();
+
+  if (
+    bookNamesLowerCase.indexOf(from.toLowerCase()) >
+    bookNamesLowerCase.indexOf(to.toLowerCase())
+  ) {
+    [from, to] = [to, from];
+  }
+
+  const fromIdx = Math.max(bookNamesLowerCase.indexOf(from.toLowerCase()), 0);
+  const toIdx = Math.min(
+    bookNamesLowerCase.indexOf(to.toLowerCase()) + 1,
+    all_verses.length
+  );
 
   for (
-    let i = 0;
-    i < all_verses.length && searchResults.length < max_search_results;
+    let i = fromIdx;
+    i < toIdx && searchResults.length < max_search_results;
     i++
   ) {
     let currentBook = all_verses[i];
@@ -175,7 +201,8 @@ function exactMatchSearch(searchString) {
           currentChapter[k]
             .toLowerCase()
             .replace(/\[|\]/g, "")
-            .includes(searchString)
+            .includes(searchText) ||
+          currentChapter[k].toLowerCase().includes(searchText)
         ) {
           searchResults.push({
             book: bookNames[i],

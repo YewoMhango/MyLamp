@@ -95,31 +95,23 @@ app.on("ready", () => {
     app.quit();
   });
 
-  ipcMain.on("request", (e, requestPath) => {
-    // console.log(requestPath);
-    win.webContents.send("response", requestHandler("/" + requestPath));
+  ipcMain.on("request", (e, request) => {
+    // console.log(request);
+    win.webContents.send("response", requestHandler(request));
   });
 });
 
 const handlers = require("./handlers");
 
 function requestHandler(request) {
-  let result;
-
-  if (
-    (result = /^\/English\/([\d\w ]+)\/Chapters\/(\d{1,3}).txt$/i.exec(request))
-  ) {
+  if (request.type == "chapterText") {
     // console.log("Being handled as chapter text request...");
-    return handlers.handleChapterTextRequest(result);
-  } else if (
-    (result = /^\/English\/([\d\w ]+)\/Chapters\/(\d{1,3}).json$/i.exec(
-      request
-    ))
-  ) {
+    return handlers.handleChapterTextRequest(request.details);
+  } else if (request.type == "chapterJson") {
     // console.log("Being handled as chapter json request...");
-    return handlers.handleChapterJsonRequest(result);
-  } else if ((result = /^\/search\/(\w+)\/(\w+)\/(.+)$/i.exec(request))) {
+    return handlers.handleChapterJsonRequest(request.details);
+  } else if (request.type == "search") {
     // console.log("Being handled as search request...");
-    return handlers.handleSearchRequest(result);
+    return handlers.handleSearchRequest(request.details);
   }
 }

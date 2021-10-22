@@ -4,8 +4,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bible</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="./script.js" defer></script>
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/scrollBars.css" />
+    <script src="./js/script.js" defer></script>
   </head>
   <body>
     <nav>
@@ -182,7 +183,20 @@
           </tr>
         </table>
       </div>
-      <div class="verse-selector"></div>
+      <div class="verse-selector">
+        <div class="title">
+          <span>Book</span>
+        </div>
+        <div class="title">
+          <span>Chapter</span>
+        </div>
+        <div class="title">
+          <span>Verse</span>
+        </div>
+        <div class="select select-book"></div>
+        <div class="select select-chapter"></div>
+        <div class="select select-verse"></div>
+      </div>
     </section>
     <main>
       <section class="content"></section>
@@ -229,11 +243,29 @@
               </button>
             </div>
             <div class="second">
-              Search type:
-              <select name="search-type" id="search-type">
-                <option value="standard" selected>Standard</option>
-                <option value="exact">Exact</option>
-              </select>
+              <table>
+                <tr>
+                  <td>Search type:</td>
+                  <td>
+                    <select name="search-type" id="search-type">
+                      <option value="standard" selected>Standard</option>
+                      <option value="exact">Exact</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>From:</td>
+                  <td>
+                    <select name="search-from" id="search-from"></select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>To:</td>
+                  <td>
+                    <select name="search-to" id="search-to"></select>
+                  </td>
+                </tr>
+              </table>
             </div>
           </div>
           <div class="results">
