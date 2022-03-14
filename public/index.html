@@ -1,32 +1,37 @@
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bible</title>
-    <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="./css/scrollBars.css" />
-    <script src="./js/script.js" defer></script>
-  </head>
-  <body>
-    <nav>
-      <div>
-        <button class="menu-button" onclick="showMenu()" title="Menu">
-          <svg
-            width="105.83mm"
-            height="105.83mm"
-            version="1.1"
-            viewBox="0 0 105.83 105.83"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g fill="#fff" stroke-linecap="round" stroke-width="5.2917">
-              <path d="m31.097 52.917h43.64" />
-              <path d="m31.097 37.223h43.64" />
-              <path d="m31.097 68.61h43.64" />
-            </g>
-          </svg>
-        </button>
-        <!-- <button class="back" onclick="navigateBack()" title="Back">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Bible</title>
+        <link rel="stylesheet" href="./css/style.css" />
+        <link rel="stylesheet" href="./css/scrollBars.css" />
+        <script src="./js/script.js" defer></script>
+        <script src="./js/domEventHandlers.js" defer></script>
+    </head>
+    <body>
+        <nav>
+            <div>
+                <button class="menu-button" onclick="showMenu()" title="Menu">
+                    <svg
+                        width="105.83mm"
+                        height="105.83mm"
+                        version="1.1"
+                        viewBox="0 0 105.83 105.83"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <g
+                            fill="#fff"
+                            stroke-linecap="round"
+                            stroke-width="5.2917"
+                        >
+                            <path d="m31.097 52.917h43.64" />
+                            <path d="m31.097 37.223h43.64" />
+                            <path d="m31.097 68.61h43.64" />
+                        </g>
+                    </svg>
+                </button>
+                <!-- <button class="back" onclick="navigateBack()" title="Back">
           <svg
             width="105.83mm"
             height="105.83mm"
@@ -45,61 +50,65 @@
             </g>
           </svg>
         </button> -->
-      </div>
-      <div class="nav-central">
-        <button
-          class="prev-chap"
-          onclick="previousChapter()"
-          title="Previous chapter"
-        >
-          <svg
-            width="105.83mm"
-            height="105.83mm"
-            version="1.1"
-            viewBox="0 0 105.83 105.83"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g
-              transform="translate(-500.46 -39.31)"
-              fill="none"
-              stroke-linecap="round"
-              stroke-width="5.2917"
-            >
-              <path d="m561.47 76.05-16.176 16.176" />
-              <path d="m561.47 108.4-16.176-16.176" />
-            </g>
-          </svg>
-        </button>
-        <button
-          class="book-select"
-          onclick="showVerseSelector()"
-          title="Select verse"
-        ></button>
-        <button class="next-chap" onclick="nextChapter()" title="Next chapter">
-          <svg
-            width="105.83mm"
-            height="105.83mm"
-            version="1.1"
-            viewBox="0 0 105.83 105.83"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="m44.829 36.741 16.176 16.176"
-              fill="none"
-              stroke-linecap="round"
-              stroke-width="5.2917"
-            />
-            <path
-              d="m44.829 69.092 16.176-16.176"
-              fill="none"
-              stroke-linecap="round"
-              stroke-width="5.2917"
-            />
-          </svg>
-        </button>
-      </div>
-      <div>
-        <!-- <button class="forward" onclick="navigateForward()" title="Forward">
+            </div>
+            <div class="nav-central">
+                <button
+                    class="prev-chap"
+                    onclick="previousChapter()"
+                    title="Previous chapter"
+                >
+                    <svg
+                        width="105.83mm"
+                        height="105.83mm"
+                        version="1.1"
+                        viewBox="0 0 105.83 105.83"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <g
+                            transform="translate(-500.46 -39.31)"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-width="5.2917"
+                        >
+                            <path d="m561.47 76.05-16.176 16.176" />
+                            <path d="m561.47 108.4-16.176-16.176" />
+                        </g>
+                    </svg>
+                </button>
+                <button
+                    class="book-select"
+                    onclick="showVerseSelector()"
+                    title="Select verse"
+                ></button>
+                <button
+                    class="next-chap"
+                    onclick="nextChapter()"
+                    title="Next chapter"
+                >
+                    <svg
+                        width="105.83mm"
+                        height="105.83mm"
+                        version="1.1"
+                        viewBox="0 0 105.83 105.83"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="m44.829 36.741 16.176 16.176"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-width="5.2917"
+                        />
+                        <path
+                            d="m44.829 69.092 16.176-16.176"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-width="5.2917"
+                        />
+                    </svg>
+                </button>
+            </div>
+            <div>
+                <!-- <button class="forward" onclick="navigateForward()" title="Forward">
           <svg
             width="105.83mm"
             height="105.83mm"
@@ -118,163 +127,206 @@
             </g>
           </svg>
         </button> -->
-        <button
-          class="search-button"
-          onclick="toggleSearchBar()"
-          title="Search"
-        >
-          <svg
-            width="105.83mm"
-            height="105.83mm"
-            version="1.1"
-            viewBox="0 0 105.83 105.83"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g fill="none" stroke-width="5.2917">
-              <circle
-                cx="46.923"
-                cy="46.923"
-                r="15.205"
-                stroke-dashoffset="18.898"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                style="paint-order: markers stroke fill"
-              />
-              <path d="m68.046 68.046 6.0698 6.0698" stroke-linecap="round" />
-              <path d="m57.462 57.462 10.584 10.584" />
-              <circle
-                cx="46.923"
-                cy="46.923"
-                r="15.205"
-                stroke-dashoffset="18.898"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                style="paint-order: markers stroke fill"
-              />
-            </g>
-          </svg>
-        </button>
-      </div>
-    </nav>
-    <section class="detached-elements" onclick="closeOverlay()">
-      <div class="menu">
-        <table>
-          <tr>
-            <td>Dark mode:</td>
-            <td>
-              <button onclick="toggleDarkMode()" class="switchButton">
-                <div class="circleInBtn"></div>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Text size:</td>
-            <td>
-              <input
-                type="range"
-                id="fontSizeSlider"
-                min="16"
-                max="48"
-                onmousemove="changeFontSize()"
-                onchange="changeFontSize()"
-              />
-            </td>
-            <td class="fontSizeIndicator"></td>
-          </tr>
-        </table>
-      </div>
-      <div class="verse-selector">
-        <div class="title">
-          <span>Book</span>
-        </div>
-        <div class="title">
-          <span>Chapter</span>
-        </div>
-        <div class="title">
-          <span>Verse</span>
-        </div>
-        <div class="select select-book"></div>
-        <div class="select select-chapter"></div>
-        <div class="select select-verse"></div>
-      </div>
-    </section>
-    <main>
-      <section class="content"></section>
-      <div class="search-resizer"></div>
-      <section class="search">
-        <div class="container">
-          <div class="input">
-            <div class="first">
-              <input id="searchBox" type="search" />
-              <button onclick="search()">
-                <svg
-                  width="105.83mm"
-                  height="105.83mm"
-                  version="1.1"
-                  viewBox="0 0 105.83 105.83"
-                  xmlns="http://www.w3.org/2000/svg"
+                <button
+                    class="search-button"
+                    onclick="toggleSearchBar()"
+                    title="Search"
                 >
-                  <g fill="none" stroke="#808080" stroke-width="6.6254">
-                    <circle
-                      cx="43.526"
-                      cy="43.526"
-                      r="23.821"
-                      stroke-dashoffset="18.898"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      style="paint-order: markers stroke fill"
-                    />
-                    <path
-                      d="m76.619 76.619 9.5096 9.5096"
-                      stroke-linecap="round"
-                    />
-                    <path d="m60.038 60.038 16.581 16.581" />
-                    <circle
-                      cx="43.526"
-                      cy="43.526"
-                      r="23.821"
-                      stroke-dashoffset="18.898"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      style="paint-order: markers stroke fill"
-                    />
-                  </g>
-                </svg>
-              </button>
+                    <svg
+                        width="105.83mm"
+                        height="105.83mm"
+                        version="1.1"
+                        viewBox="0 0 105.83 105.83"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <g fill="none" stroke-width="5.2917">
+                            <circle
+                                cx="46.923"
+                                cy="46.923"
+                                r="15.205"
+                                stroke-dashoffset="18.898"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                style="paint-order: markers stroke fill"
+                            />
+                            <path
+                                d="m68.046 68.046 6.0698 6.0698"
+                                stroke-linecap="round"
+                            />
+                            <path d="m57.462 57.462 10.584 10.584" />
+                            <circle
+                                cx="46.923"
+                                cy="46.923"
+                                r="15.205"
+                                stroke-dashoffset="18.898"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                style="paint-order: markers stroke fill"
+                            />
+                        </g>
+                    </svg>
+                </button>
             </div>
-            <div class="second">
-              <table>
-                <tr>
-                  <td>Search type:</td>
-                  <td>
-                    <select name="search-type" id="search-type">
-                      <option value="standard" selected>Standard</option>
-                      <option value="exact">Exact</option>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td>From:</td>
-                  <td>
-                    <select name="search-from" id="search-from"></select>
-                  </td>
-                </tr>
-                <tr>
-                  <td>To:</td>
-                  <td>
-                    <select name="search-to" id="search-to"></select>
-                  </td>
-                </tr>
-              </table>
+        </nav>
+        <section class="floating-elements" onclick="closeOverlay()">
+            <div class="menu">
+                <table>
+                    <tr>
+                        <td>Dark mode:</td>
+                        <td>
+                            <button
+                                onclick="toggleDarkMode()"
+                                class="switchButton"
+                            >
+                                <div class="circleInBtn"></div>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Text size:</td>
+                        <td>
+                            <input
+                                type="range"
+                                id="fontSizeSlider"
+                                min="16"
+                                max="48"
+                                onmousemove="changeFontSize()"
+                                onchange="changeFontSize()"
+                            />
+                        </td>
+                        <td class="fontSizeIndicator"></td>
+                    </tr>
+                </table>
             </div>
-          </div>
-          <div class="results">
-            <div class="temporary">
-              <p>Search results will appear here</p>
+            <div class="verse-selector">
+                <div class="title">
+                    <span>Book</span>
+                </div>
+                <div class="title">
+                    <span>Chapter</span>
+                </div>
+                <div class="title">
+                    <span>Verse</span>
+                </div>
+                <div class="select select-book"></div>
+                <div class="select select-chapter"></div>
+                <div class="select select-verse"></div>
             </div>
-          </div>
-        </div>
-      </section>
-    </main>
-  </body>
+        </section>
+        <main>
+            <section class="content"></section>
+            <div class="search-resizer"></div>
+            <section class="search">
+                <div class="container">
+                    <div class="input">
+                        <div class="first">
+                            <input id="searchBox" type="search" />
+                            <button onclick="search()">
+                                <svg
+                                    width="105.83mm"
+                                    height="105.83mm"
+                                    version="1.1"
+                                    viewBox="0 0 105.83 105.83"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <g
+                                        fill="none"
+                                        stroke="#808080"
+                                        stroke-width="6.6254"
+                                    >
+                                        <circle
+                                            cx="43.526"
+                                            cy="43.526"
+                                            r="23.821"
+                                            stroke-dashoffset="18.898"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            style="
+                                                paint-order: markers stroke fill;
+                                            "
+                                        />
+                                        <path
+                                            d="m76.619 76.619 9.5096 9.5096"
+                                            stroke-linecap="round"
+                                        />
+                                        <path
+                                            d="m60.038 60.038 16.581 16.581"
+                                        />
+                                        <circle
+                                            cx="43.526"
+                                            cy="43.526"
+                                            r="23.821"
+                                            stroke-dashoffset="18.898"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            style="
+                                                paint-order: markers stroke fill;
+                                            "
+                                        />
+                                    </g>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="second">
+                            <table>
+                                <tr>
+                                    <td>Search type:</td>
+                                    <td>
+                                        <select
+                                            name="search-type"
+                                            id="search-type"
+                                        >
+                                            <option value="standard" selected>
+                                                Standard
+                                            </option>
+                                            <option value="exact">Exact</option>
+                                            <option value="regex">
+                                                Regular Expression
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <label for="case-sensitivity">
+                                            <input
+                                                type="checkbox"
+                                                name="case-sensitivity"
+                                                id="case-sensitivity"
+                                            />
+                                            case sensitive
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>From:</td>
+                                    <td>
+                                        <select
+                                            name="search-from"
+                                            id="search-from"
+                                        ></select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>To:</td>
+                                    <td>
+                                        <select
+                                            name="search-to"
+                                            id="search-to"
+                                        ></select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="results">
+                        <div class="temporary">
+                            <p>Search results will appear here</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </body>
 </html>

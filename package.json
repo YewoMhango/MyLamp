@@ -26,13 +26,16 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon": "./icon.ico"
+        "icon": "./icon/icon.png"
       },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "MyLamp"
+            "name": "MyLamp",
+            "options": {
+              "icon": "./icon/icon.ico"
+            }
           }
         },
         {
@@ -43,11 +46,19 @@
         },
         {
           "name": "@electron-forge/maker-deb",
-          "config": {}
+          "config": {
+            "options": {
+              "icon": "./icon/icon.png"
+            }
+          }
         },
         {
           "name": "@electron-forge/maker-rpm",
-          "config": {}
+          "config": {
+            "options": {
+              "icon": "./icon/icon.png"
+            }
+          }
         }
       ]
     }
