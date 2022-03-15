@@ -46,7 +46,11 @@ class Verse {
     static fromJson(str: string) {
         let value = JSON.parse(str);
 
-        return new Verse(value.book, value.chapter, value.verseNumber);
+        return new Verse(
+            value.book || "Genesis",
+            value.chapter || 1,
+            value.verseNumber || 1
+        );
     }
 }
 /**
