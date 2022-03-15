@@ -71,8 +71,8 @@ function handleSquirrelEvent() {
 app.on("ready", () => {
     let win = new BrowserWindow({
         title: "Bible",
-        // frame: false,
-        // titleBarStyle: "hidden",
+        frame: false,
+        titleBarStyle: "hidden",
         icon: "Bible.png",
         webPreferences: {
             nodeIntegration: true,
@@ -89,7 +89,7 @@ app.on("ready", () => {
         })
     );
 
-    // win.removeMenu();
+    win.removeMenu();
 
     win.on("closed", () => {
         app.quit();
