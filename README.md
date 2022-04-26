@@ -1,5 +1,5 @@
 # MyLamp Bible
-This is a desktop Windows Bible app made with electron. Download page can be found in the [releases page](https://github.com/YewoMhango/MyLamp/releases/latest)
+This is a desktop Windows Bible app made with electron. Download page can be found in the [releases page](https://github.com/YewoMhango/MyLamp/releases/latest) and you can preview it [here](https://yewomhango.github.io/MyLamp)
 
 # Installation on Ubuntu (or just Debian)
 If you download the .deb file, you can install it by running
