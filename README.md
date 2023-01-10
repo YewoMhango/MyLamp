@@ -8,5 +8,10 @@ If you download the .deb file, you can install it by running
 sudo dpkg -i package_name.deb
 ```
 
-# Running Using NPM
-You can run the app from source by first cloning this repository, running `npm install` to install dependencies the first time and running `npm start` whenever you want to run the app.
+# Tauri + Svelte + Typescript
+
+This template should help get you started developing with Tauri, Svelte and TypeScript in Vite.
+
+## Recommended IDE Setup
+
+[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer).

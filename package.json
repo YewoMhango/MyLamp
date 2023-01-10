@@ -1,66 +1,28 @@
 {
-  "name": "MyLamp",
-  "version": "1.1.2",
-  "description": "Desktop Bible app",
-  "main": "index.js",
+  "name": "mylamp",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "tauri": "tauri"
   },
-  "author": "Yewo Mhango",
-  "license": "ISC",
   "dependencies": {
-    "custom-electron-titlebar": "^3.2.7",
-    "electron-squirrel-startup": "^1.0.0"
+    "@tauri-apps/api": "^1.2.0"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.57",
-    "@electron-forge/maker-deb": "^6.0.0-beta.57",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.57",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.57",
-    "@electron-forge/maker-zip": "^6.0.0-beta.57",
-    "electron": "13.1.4"
-  },
-  "config": {
-    "forge": {
-      "packagerConfig": {
-        "icon": "./icon/icon.png"
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "MyLamp",
-            "options": {
-              "icon": "./icon/icon.ico"
-            }
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {
-            "options": {
-              "icon": "./icon/icon.png"
-            }
-          }
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {
-            "options": {
-              "icon": "./icon/icon.png"
-            }
-          }
-        }
-      ]
-    }
+    "@types/node": "^18.7.10",
+    "@sveltejs/vite-plugin-svelte": "^2.0.0",
+    "@tsconfig/svelte": "^3.0.0",
+    "svelte": "^3.54.0",
+    "svelte-check": "^3.0.0",
+    "svelte-preprocess": "^5.0.0",
+    "tslib": "^2.4.1",
+    "typescript": "^4.6.4",
+    "vite": "^4.0.0",
+    "@tauri-apps/cli": "^1.2.2"
   }
 }
