@@ -80,6 +80,6 @@
   [data-dark-mode="on"] select {
     border-bottom: 2px rgb(83, 83, 83) solid;
     background-color: rgb(47, 47, 47);
-    color: white;
+    color: hsl(0, 0%, 70%);
   }
 </style>
