@@ -191,4 +191,91 @@
   [data-dark-mode="on"] .verse-selector .select a.selected {
     background-color: rgb(70, 70, 70);
   }
+
+  /*////////////////////////////////////////////////////////////////*/
+  /* SCROLL BARS                                                    */
+
+  .overlay .verse-selector .select::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+  }
+  .overlay .verse-selector .select::-webkit-scrollbar-corner,
+  .overlay .verse-selector .select::-webkit-scrollbar-track {
+    background-color: #e2e2e2;
+  }
+  .overlay .verse-selector .select::-webkit-scrollbar-thumb {
+    background-color: rgb(197, 197, 197);
+    background-clip: padding-box;
+    border: 4px solid transparent;
+    border-radius: 10px;
+  }
+  .overlay .verse-selector .select::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(178, 178, 178);
+  }
+  .overlay .verse-selector .select::-webkit-scrollbar-thumb:active {
+    background-color: rgb(163, 163, 163);
+  }
+  .overlay .verse-selector::-webkit-scrollbar-button:single-button {
+    display: none;
+    background: none;
+    background-size: 0;
+    height: 0;
+    width: 0;
+  }
+  .overlay
+    .verse-selector
+    .select::-webkit-scrollbar-button:single-button:vertical:decrement,
+  .overlay
+    .verse-selector
+    .select::-webkit-scrollbar-button:single-button:vertical:decrement:hover,
+  .overlay
+    .verse-selector
+    .select::-webkit-scrollbar-button:single-button:vertical:decrement:active,
+  .overlay
+    .verse-selector
+    .select::-webkit-scrollbar-button:single-button:vertical:increment,
+  .overlay
+    .verse-selector
+    .select::-webkit-scrollbar-button:single-button:vertical:increment:hover,
+  .overlay
+    .verse-selector
+    .select::-webkit-scrollbar-button:single-button:vertical:increment:active,
+  .overlay
+    .verse-selector
+    .select::-webkit-scrollbar-button:single-button:horizontal:decrement,
+  .overlay
+    .verse-selector
+    .select::-webkit-scrollbar-button:single-button:horizontal:decrement:hover,
+  .overlay
+    .verse-selector
+    .select::-webkit-scrollbar-button:single-button:horizontal:decrement:active,
+  .overlay
+    .verse-selector
+    .select::-webkit-scrollbar-button:single-button:horizontal:increment,
+  .overlay
+    .verse-selector
+    .select::-webkit-scrollbar-button:single-button:horizontal:increment:hover,
+  .overlay
+    .verse-selector
+    .select::-webkit-scrollbar-button:single-button:horizontal:increment:active {
+    height: 0;
+    width: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='0' height='0' fill='transparent'></svg>");
+  }
+
+  [data-dark-mode="on"] .verse-selector .select::-webkit-scrollbar-corner,
+  [data-dark-mode="on"] .verse-selector .select::-webkit-scrollbar-track {
+    background-color: rgb(29, 29, 29);
+  }
+  [data-dark-mode="on"] .verse-selector .select::-webkit-scrollbar-thumb {
+    background-color: rgb(58, 58, 58);
+  }
+  [data-dark-mode="on"] .verse-selector .select::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(77, 77, 77);
+  }
+  [data-dark-mode="on"]
+    .verse-selector
+    .select::-webkit-scrollbar-thumb:active {
+    background-color: rgb(92, 92, 92);
+  }
 </style>

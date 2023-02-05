@@ -73,6 +73,7 @@
     cursor: pointer;
     color: inherit;
     display: block;
+    font-weight: 400;
   }
 
   .search-results .results-list .result:hover {
